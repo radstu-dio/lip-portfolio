@@ -11,13 +11,13 @@ The Lipaa Portfolio Package provides a utility hook, provider and types to simpl
 To use the package in your project, install it via npm or yarn:
 
 ```bash
-npm install lipaa-portfolio
+npm install lip-portfolio
 ```
 
 or
 
 ```bash
-yarn add lipaa-portfolio
+yarn add lip-portfolio
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ The `PortfolioProvider` component wraps your application or component where port
 Example:
 
 ```tsx
-import { PortfolioProvider } from 'lipaa-portfolio';
+import { PortfolioProvider } from 'lip-portfolio';
 
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -57,7 +57,7 @@ The `usePortfolio` hook provides access to portfolio data within a component.
 Example:
 
 ```tsx
-import { usePortfolio } from 'lipaa-portfolio';
+import { usePortfolio } from 'lip-portfolio';
 
 const defaultProfile: PortfolioProfile = {
   id: '1',
@@ -92,7 +92,7 @@ The package includes several TypeScript interfaces for type safety, such as Port
 Example:
 
 ```tsx
-import { PortfolioProfile } from 'lipaa-portfolio';
+import { PortfolioProfile } from 'lip-portfolio';
 
 const userProfile: PortfolioProfile = {
   id: '1',
