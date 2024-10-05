@@ -31,7 +31,7 @@ const reducer = (
   action:
     | { type: 'LOADING' }
     | { type: 'ERROR'; error: FetchState['error'] }
-    | { type: 'SUCCESS'; data: PortfolioResponse }
+    | { type: 'SUCCESS'; data: PortfolioResponse; useDefaultData: boolean }
 ): UsePortfolio => {
   switch (action.type) {
     case 'LOADING':
@@ -58,10 +58,22 @@ const reducer = (
           getSocialPlatforms(defaultData, action.data.socialPlatforms),
         getSocialAnalytics: (defaultData) =>
           getSocialAnalytics(defaultData, action.data.socialAnalytics),
-        getTotalAudience,
-        getLargestAudience,
-        getBestPerformingPlatform,
-        getLatestYoutubeVideo,
+        getTotalAudience: (defaultData) =>
+          getTotalAudience(
+            action.useDefaultData ? defaultData : action.data.socialPlatforms
+          ),
+        getLargestAudience: (defaultData) =>
+          getLargestAudience(
+            action.useDefaultData ? defaultData : action.data.socialPlatforms
+          ),
+        getBestPerformingPlatform: (defaultData) =>
+          getBestPerformingPlatform(
+            action.useDefaultData ? defaultData : action.data.socialPlatforms
+          ),
+        getLatestYoutubeVideo: (defaultData) =>
+          getLatestYoutubeVideo(
+            action.useDefaultData ? defaultData : action.data.socialPlatforms
+          ),
       };
     case 'ERROR':
       return { ...state, isLoading: false, isError: true, error: action.error };
@@ -110,7 +122,7 @@ const PortfolioProvider = ({
         }
 
         const { data } = await response.json();
-        dispatch({ type: 'SUCCESS', data });
+        dispatch({ type: 'SUCCESS', data, useDefaultData });
       } catch (error: any) {
         dispatch({ type: 'ERROR', error });
       }

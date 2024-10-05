@@ -230,15 +230,15 @@ export type UsePortfolio = FetchState & {
   getSocialAnalytics: (
     defaultData: PortfolioSocialAnalytics
   ) => PortfolioSocialAnalytics;
-  getTotalAudience: (socialPlatforms: PortfolioSocialPlatform[]) => number;
+  getTotalAudience: (defaultData: PortfolioSocialPlatform[]) => number;
   getLargestAudience: (
-    socialPlatforms: PortfolioSocialPlatform[]
+    defaultData: PortfolioSocialPlatform[]
   ) => PortfolioSocialPlatform | null;
   getBestPerformingPlatform: (
-    socialPlatforms: PortfolioSocialPlatform[]
+    defaultData: PortfolioSocialPlatform[]
   ) => PortfolioSocialPlatform | null;
   getLatestYoutubeVideo: (
-    socialPlatforms: PortfolioSocialPlatform[]
+    defaultData: PortfolioSocialPlatform[]
   ) => PortfolioSocialPlatform['media'][number] | null;
 };
 

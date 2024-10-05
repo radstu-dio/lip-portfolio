@@ -149,10 +149,10 @@ This hook returns portfolio-related data and actions:
 - `getRecommendations(defaultData)`: Returns portfolio recommendations, or defaultData if unavailable.
 - `getCollaborations(defaultData)`: Returns collaborations related to the portfolio, or defaultData if unavailable.
 - `getSocialAnalytics(defaultData)`: Returns social analytics data, or defaultData if unavailable.
-- `getTotalAudience(socialPlatform[])`: Returns the total audience count across all platforms.
-- `getLargestAudience(socialPlatform[])`: Returns the platform with the largest audience, or null if unavailable.
-- `getBestPerformingPlatform(socialPlatform[])`: Returns the best-performing social platform, or null if unavailable.
-- `getLatestYoutubeVideo(socialPlatform[])`: Returns the most recent YouTube video, or null if unavailable.
+- `getTotalAudience(defaultData)`: Returns the total audience count across all platforms.
+- `getLargestAudience(defaultData)`: Returns the platform with the largest audience, or null if unavailable.
+- `getBestPerformingPlatform(defaultData)`: Returns the best-performing social platform, or null if unavailable.
+- `getLatestYoutubeVideo(defaultData)`: Returns the most recent YouTube video, or null if unavailable.
 
 #### `PortfolioProvider`
 

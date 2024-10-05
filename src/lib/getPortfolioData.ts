@@ -222,10 +222,10 @@ const getSocialPlatforms = (
     : defaultData;
 
 function getBestPerformingPlatform(
-  socialPlatforms: PortfolioSocialPlatform[]
+  data: PortfolioSocialPlatform[]
 ): PortfolioSocialPlatform | null {
-  return socialPlatforms.length
-    ? socialPlatforms.reduce((bestPlatform, currentPlatform) => {
+  return data.length
+    ? data.reduce((bestPlatform, currentPlatform) => {
         const currentViews =
           currentPlatform.metrics.find(
             (metric) => metric.name === 'Average Views'
@@ -234,16 +234,23 @@ function getBestPerformingPlatform(
           bestPlatform.metrics.find((metric) => metric.name === 'Average Views')
             ?.value || 0;
 
-        return currentViews > bestViews ? currentPlatform : bestPlatform;
+        const bestPerformingPlatform =
+          currentViews > bestViews ? currentPlatform : bestPlatform;
+        return {
+          ...bestPerformingPlatform,
+          icon: metricIcons[
+            bestPerformingPlatform.name as PortfolioSocialPlatform['metrics'][number]['name']
+          ],
+        };
       })
     : null;
 }
 
 function getLargestAudience(
-  socialPlatforms: PortfolioSocialPlatform[]
+  data: PortfolioSocialPlatform[]
 ): PortfolioSocialPlatform | null {
-  return socialPlatforms.length
-    ? socialPlatforms.reduce((largestPlatform, currentPlatform) => {
+  return data.length
+    ? data.reduce((largestPlatform, currentPlatform) => {
         const currentFollowers =
           currentPlatform.metrics.find((metric) => metric.name === 'Followers')
             ?.value || 0;
@@ -251,16 +258,23 @@ function getLargestAudience(
           largestPlatform.metrics.find((metric) => metric.name === 'Followers')
             ?.value || 0;
 
-        return currentFollowers > largestFollowers
-          ? currentPlatform
-          : largestPlatform;
+        const largestAudience =
+          currentFollowers > largestFollowers
+            ? currentPlatform
+            : largestPlatform;
+        return {
+          ...largestAudience,
+          icon: metricIcons[
+            largestAudience.name as PortfolioSocialPlatform['metrics'][number]['name']
+          ],
+        };
       })
     : null;
 }
 
-function getTotalAudience(socialPlatforms: PortfolioSocialPlatform[]): number {
-  return socialPlatforms.length
-    ? socialPlatforms.reduce((total, platform) => {
+function getTotalAudience(data: PortfolioSocialPlatform[]): number {
+  return data.length
+    ? data.reduce((total, platform) => {
         const followers =
           platform.metrics.find((metric) => metric.name === 'Followers')
             ?.value || 0;
@@ -273,9 +287,9 @@ function getTotalAudience(socialPlatforms: PortfolioSocialPlatform[]): number {
 }
 
 function getLatestYoutubeVideo(
-  socialPlatforms: PortfolioSocialPlatform[]
+  data: PortfolioSocialPlatform[]
 ): PortfolioSocialPlatform['media'][number] | null {
-  const youTubeVideos = socialPlatforms
+  const youTubeVideos = data
     .sort()
     .find((platform) => platform.name === 'youtube')?.media;
 
