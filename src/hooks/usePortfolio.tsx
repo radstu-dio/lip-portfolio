@@ -103,10 +103,11 @@ const PortfolioProvider = ({
     getCollaborations: (defaultData) => defaultData,
     getSocialPlatforms: (defaultData) => defaultData,
     getSocialAnalytics: (defaultData) => defaultData,
-    getTotalAudience: () => 0,
-    getLargestAudience: () => null,
-    getBestPerformingPlatform: () => null,
-    getLatestYoutubeVideo: () => null,
+    getTotalAudience: (defaultData) => getTotalAudience(defaultData),
+    getLargestAudience: (defaultData) => getLargestAudience(defaultData),
+    getBestPerformingPlatform: (defaultData) =>
+      getBestPerformingPlatform(defaultData),
+    getLatestYoutubeVideo: (defaultData) => getLatestYoutubeVideo(defaultData),
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
