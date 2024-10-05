@@ -1,0 +1,30 @@
+{
+  "name": "lipaa-portfolio",
+  "version": "1.0.0",
+  "description": "The Lipaa Portfolio Package provides a utility hook, provider and types to simplify working with portfolio data in multiple templates.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Victory Ogbiyoyo",
+  "license": "UNLICENSED",
+  "keywords": [
+    "lipaa-portfolio"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "clean": "rimraf dist"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18",
+    "typescript": "^5.6.2",
+    "rimraf": "^3.0.0"
+  }
+}
