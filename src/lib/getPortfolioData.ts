@@ -9,46 +9,7 @@ import {
   PortfolioSocialLink,
   PortfolioSocialPlatform,
 } from '../types';
-import {
-  FacebookIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  SpotifyIcon,
-  TiktokIcon,
-  TwitchIcon,
-  TwitterIcon,
-  YoutubeIcon,
-  CommentIcon,
-  HeartIcon,
-  LineChartIcon,
-  User2Icon,
-  ShareIcon,
-  EyeIcon,
-} from '../components/Icons';
-
-const metricIcons: Record<
-  PortfolioSocialPlatform['metrics'][number]['name'],
-  PortfolioSocialPlatform['metrics'][number]['icon']
-> = {
-  Subscribers: User2Icon,
-  Followers: User2Icon,
-  'Average Likes': HeartIcon,
-  'Average Views': EyeIcon,
-  'Average Comments': CommentIcon,
-  'Average Shares': ShareIcon,
-  'Engagement Rate': LineChartIcon,
-};
-
-const socialIcons = {
-  Tiktok: TiktokIcon,
-  Podcast: LinkedInIcon,
-  Twitter: TwitterIcon,
-  Instagram: InstagramIcon,
-  Facebook: FacebookIcon,
-  Youtube: YoutubeIcon,
-  Spotify: SpotifyIcon,
-  Twitch: TwitchIcon,
-};
+import { metricIcons, socialIcons } from '../components/Icons';
 
 const getTemplateThemeColor = (
   defaultData: Portfolio['templateThemeColor'],

@@ -4,6 +4,7 @@ The Lipaa Portfolio Package provides a utility hook, provider and types to simpl
 
 - `usePortfolio`: A React hook that fetches and provides utility functions for extracting data such as: template's theme color, profile information, social platforms information, products information, brands information, recommendations information, collaborations information, social analytics information, total audience information, largest audience information, best-performing social platform information, most recent YouTube video information.
 - `PortfolioProvider`: A context provider to wrap components for accessing portfolio data.
+- `metricIcons` and `socialIcons`: Icons for metrics and social platforms.
 - `types` and `interfaces` for strong TypeScript support.
 
 ## Installation

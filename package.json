@@ -1,6 +1,6 @@
 {
   "name": "lip-portfolio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The lip Portfolio Package provides a utility hook, provider and types to simplify working with portfolio data in multiple templates.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

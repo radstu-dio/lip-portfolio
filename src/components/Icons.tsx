@@ -1,4 +1,5 @@
 import React from 'react';
+import { PortfolioSocialLink, PortfolioSocialPlatform } from '../types';
 
 export function LinkedInIcon({ className }: React.SVGProps<SVGSVGElement>) {
   return (
@@ -376,3 +377,30 @@ export function EyeIcon({
     </svg>
   );
 }
+
+export const metricIcons: Record<
+  PortfolioSocialPlatform['metrics'][number]['name'],
+  PortfolioSocialPlatform['metrics'][number]['icon']
+> = {
+  Subscribers: User2Icon,
+  Followers: User2Icon,
+  'Average Likes': HeartIcon,
+  'Average Views': EyeIcon,
+  'Average Comments': CommentIcon,
+  'Average Shares': ShareIcon,
+  'Engagement Rate': LineChartIcon,
+};
+
+export const socialIcons: Record<
+  PortfolioSocialLink['name'],
+  PortfolioSocialLink['icon']
+> = {
+  Tiktok: TiktokIcon,
+  Podcast: LinkedInIcon,
+  Twitter: TwitterIcon,
+  Instagram: InstagramIcon,
+  Facebook: FacebookIcon,
+  Youtube: YoutubeIcon,
+  Spotify: SpotifyIcon,
+  Twitch: TwitchIcon,
+};
