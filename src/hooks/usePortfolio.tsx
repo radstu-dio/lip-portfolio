@@ -135,9 +135,9 @@ const PortfolioProvider = ({
   }, [useDefaultData]);
 
   if (state.isLoading || state.isError) {
-    return loader ? (
+    return state.isLoading && loader ? (
       loader()
-    ) : error ? (
+    ) : state.isError && error ? (
       error(state.error)
     ) : (
       <main
