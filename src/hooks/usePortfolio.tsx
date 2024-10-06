@@ -135,8 +135,10 @@ const PortfolioProvider = ({
   }, [useDefaultData]);
 
   if (state.isLoading || state.isError) {
-    return loader || error ? (
-      loader || error
+    return loader ? (
+      loader()
+    ) : error ? (
+      error(state.error)
     ) : (
       <main
         className='dark:text-white text-[#010101]'

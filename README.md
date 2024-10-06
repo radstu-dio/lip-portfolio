@@ -166,14 +166,22 @@ The `PortfolioProvider` component fetches portfolio data and provides it to chil
 Example:
 
 ```tsx
+function renderLoader() {
+  return <CustomLoader />;
+}
+
+function renderError() {
+  return <CustomError />;
+}
+
 <PortfolioProvider
-  loader={<CustomLoader />}
-  error={<CustomError />}
+  loader={renderLoader}
+  error={renderError}
   useDefaultData={useDefaultData}
   apiUr='apiUrl'
 >
   <YourComponent />
-</PortfolioProvider>
+</PortfolioProvider>;
 ```
 
 For questions, issues, or contributions, feel free to open a GitHub issue or submit a pull request!

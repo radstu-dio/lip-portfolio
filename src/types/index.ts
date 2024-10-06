@@ -243,8 +243,8 @@ export type UsePortfolio = FetchState & {
 };
 
 export type PortfolioProviderProps = {
-  loader?: React.ReactElement;
-  error?: React.ReactElement;
+  loader?: () => React.ReactElement;
+  error?: (error?: ErrorProps) => React.ReactElement;
   useDefaultData: boolean;
   apiUrl: string;
   children: React.ReactNode;
