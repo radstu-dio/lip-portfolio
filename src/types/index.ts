@@ -223,14 +223,17 @@ export interface SendMessagePayload {
   type: string;
 }
 
-export type SendMessageProps = {
+export interface MutateState {
+  onMutate?: () => void;
+  onSuccess?: (success: SuccessProps<undefined>) => void;
+  onError?: (error: ErrorProps) => void;
+}
+
+export type SendMessageProps = MutateState & {
   baseUrl: string;
   accessId: string;
   useDefaultData: boolean;
   payload: SendMessagePayload;
-  onMutate?: () => void;
-  onSuccess?: (success: SuccessProps<undefined>) => void;
-  onError?: (error: ErrorProps) => void;
 };
 
 export type UsePortfolio = {
@@ -266,15 +269,13 @@ export type UsePortfolio = {
     ) => PortfolioSocialPlatform['media'][number] | null;
   };
   contact: {
+    hasAccessToMediaKit: (code: string) => Promise<boolean>;
     sendMessage: ({
       onMutate,
       onSuccess,
       onError,
       payload,
-    }: {
-      onMutate: SendMessageProps['onMutate'];
-      onSuccess: SendMessageProps['onSuccess'];
-      onError: SendMessageProps['onError'];
+    }: MutateState & {
       payload: SendMessageProps['payload'];
     }) => Promise<void>;
   };

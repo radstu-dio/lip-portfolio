@@ -129,6 +129,7 @@ const userProfile: PortfolioProfile = {
 - ErrorProps
 - SuccessProps
 - FetchState
+- MutateState
 - Maybe
 - SendMessagePayload
 - SendMessageProps
@@ -158,6 +159,7 @@ This hook returns portfolio-related data and actions:
   - `getBestPerformingPlatform(defaultData)`: Returns the best-performing social platform, or null if unavailable.
   - `getLatestYoutubeVideo(defaultData)`: Returns the most recent YouTube video, or null if unavailable.
 - `**contact**`: The contact object returns the following:
+  - `hasAccessToMediaKit(code)`: Checks if the user has access to the media kit based on the provided code.
   - `sendMessage({onMutate, onSuccess, onError, payload})`: Sends a message to the portfolio owner.
     - `onMutate`: A callback function to be executed before sending the message.
     - `onSuccess`: A callback function to be executed after sending the message successfully.

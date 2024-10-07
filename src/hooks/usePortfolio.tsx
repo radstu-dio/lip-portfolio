@@ -15,7 +15,7 @@ import {
   getSocials,
   getTotalAudience,
   getTemplateThemeColor,
-} from '../lib/getPortfolioData';
+} from '../lib/portfolio';
 import {
   FetchState,
   PortfolioProviderProps,
@@ -23,7 +23,7 @@ import {
   UsePortfolio,
 } from '../types';
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import sendMessage from '../lib/sendMessage';
+import { hasAccessToMediaKit, sendMessage } from '../lib/contact';
 
 const PortfolioContext = createContext<UsePortfolio | undefined>(undefined);
 
@@ -148,6 +148,8 @@ const PortfolioProvider = ({
         getLatestYoutubeVideo(defaultData),
     },
     contact: {
+      hasAccessToMediaKit: (code) =>
+        hasAccessToMediaKit(apiBaseUrl, accessId, code),
       sendMessage: ({ onMutate, onSuccess, onError, payload }) =>
         sendMessage({
           baseUrl: apiBaseUrl,

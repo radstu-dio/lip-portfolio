@@ -1,6 +1,6 @@
 import { ErrorProps, SendMessageProps } from '../types';
 
-export default async function sendMessage({
+export async function sendMessage({
   baseUrl,
   accessId,
   useDefaultData,
@@ -39,4 +39,17 @@ export default async function sendMessage({
       }
     }
   }
+}
+
+export async function hasAccessToMediaKit(
+  baseUrl: string,
+  accessId: string,
+  code: string
+): Promise<boolean> {
+  const response = await fetch(
+    `${baseUrl}/portfolios/${accessId}/contacts/${code}?isAnon=true`
+  );
+
+  const { data } = await response.json();
+  return data.access === 'granted' && data.accessCode === code;
 }
