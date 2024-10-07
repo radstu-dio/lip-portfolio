@@ -194,58 +194,97 @@ export interface PortfolioResponse extends Portfolio {
 export interface ErrorProps {
   message: string;
   status: number;
-  error: any;
+  error?: any;
 }
 
-export interface SuccessProps {
+export interface SuccessProps<T> {
   message: string;
   status: number;
-  data: PortfolioResponse | null;
+  data?: T;
 }
 
-export interface FetchState {
+export interface FetchState<T> {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
   error?: ErrorProps;
+  success?: SuccessProps<T>;
 }
 
-export type UsePortfolio = FetchState & {
-  getTemplateThemeColor: (
-    defaultData: Portfolio['templateThemeColor']
-  ) => Portfolio['templateThemeColor'];
-  getSocials: (defaultData: PortfolioSocialLink[]) => PortfolioSocialLink[];
-  getProfile: (defaultData: PortfolioProfile) => PortfolioProfile;
-  getProducts: (defaultData: PortfolioProduct[]) => PortfolioProduct[];
-  getBrands: (defaultData: PortfolioBrand[]) => PortfolioBrand[];
-  getRecommendations: (
-    defaultData: PortfolioRecommendation[]
-  ) => PortfolioRecommendation[];
-  getCollaborations: (
-    defaultData: PortfolioCollaboration[]
-  ) => PortfolioCollaboration[];
-  getSocialPlatforms: (
-    defaultData: PortfolioSocialPlatform[]
-  ) => PortfolioSocialPlatform[];
-  getSocialAnalytics: (
-    defaultData: PortfolioSocialAnalytics
-  ) => PortfolioSocialAnalytics;
-  getTotalAudience: (defaultData: PortfolioSocialPlatform[]) => number;
-  getLargestAudience: (
-    defaultData: PortfolioSocialPlatform[]
-  ) => PortfolioSocialPlatform | null;
-  getBestPerformingPlatform: (
-    defaultData: PortfolioSocialPlatform[]
-  ) => PortfolioSocialPlatform | null;
-  getLatestYoutubeVideo: (
-    defaultData: PortfolioSocialPlatform[]
-  ) => PortfolioSocialPlatform['media'][number] | null;
+export type Maybe<T> = T | null | undefined;
+
+export interface SendMessagePayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  company?: Maybe<string | undefined>;
+  subject: string;
+  message: string;
+  type: string;
+}
+
+export type SendMessageProps = {
+  baseUrl: string;
+  accessId: string;
+  useDefaultData: boolean;
+  payload: SendMessagePayload;
+  onMutate?: () => void;
+  onSuccess?: (success: SuccessProps<undefined>) => void;
+  onError?: (error: ErrorProps) => void;
+};
+
+export type UsePortfolio = {
+  portfolio: FetchState<PortfolioResponse> & {
+    getTemplateThemeColor: (
+      defaultData: Portfolio['templateThemeColor']
+    ) => Portfolio['templateThemeColor'];
+    getSocials: (defaultData: PortfolioSocialLink[]) => PortfolioSocialLink[];
+    getProfile: (defaultData: PortfolioProfile) => PortfolioProfile;
+    getProducts: (defaultData: PortfolioProduct[]) => PortfolioProduct[];
+    getBrands: (defaultData: PortfolioBrand[]) => PortfolioBrand[];
+    getRecommendations: (
+      defaultData: PortfolioRecommendation[]
+    ) => PortfolioRecommendation[];
+    getCollaborations: (
+      defaultData: PortfolioCollaboration[]
+    ) => PortfolioCollaboration[];
+    getSocialPlatforms: (
+      defaultData: PortfolioSocialPlatform[]
+    ) => PortfolioSocialPlatform[];
+    getSocialAnalytics: (
+      defaultData: PortfolioSocialAnalytics
+    ) => PortfolioSocialAnalytics;
+    getTotalAudience: (defaultData: PortfolioSocialPlatform[]) => number;
+    getLargestAudience: (
+      defaultData: PortfolioSocialPlatform[]
+    ) => PortfolioSocialPlatform | null;
+    getBestPerformingPlatform: (
+      defaultData: PortfolioSocialPlatform[]
+    ) => PortfolioSocialPlatform | null;
+    getLatestYoutubeVideo: (
+      defaultData: PortfolioSocialPlatform[]
+    ) => PortfolioSocialPlatform['media'][number] | null;
+  };
+  contact: {
+    sendMessage: ({
+      onMutate,
+      onSuccess,
+      onError,
+      payload,
+    }: {
+      onMutate: SendMessageProps['onMutate'];
+      onSuccess: SendMessageProps['onSuccess'];
+      onError: SendMessageProps['onError'];
+      payload: SendMessageProps['payload'];
+    }) => Promise<void>;
+  };
 };
 
 export type PortfolioProviderProps = {
   loader?: () => React.ReactElement;
   error?: (error?: ErrorProps) => React.ReactElement;
-  useDefaultData: boolean;
-  apiUrl: string;
+  apiBaseUrl: string;
+  accessId: string;
+  isDraft: boolean;
   children: React.ReactNode;
 };

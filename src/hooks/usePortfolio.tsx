@@ -23,60 +23,93 @@ import {
   UsePortfolio,
 } from '../types';
 import { createContext, useContext, useEffect, useReducer } from 'react';
+import sendMessage from '../lib/sendMessage';
 
 const PortfolioContext = createContext<UsePortfolio | undefined>(undefined);
 
 const reducer = (
   state: UsePortfolio,
   action:
-    | { type: 'LOADING' }
-    | { type: 'ERROR'; error: FetchState['error'] }
-    | { type: 'SUCCESS'; data: PortfolioResponse; useDefaultData: boolean }
+    | { type: 'LOADING'; resource: 'portfolio' | 'message' }
+    | {
+        type: 'ERROR';
+        resource: 'portfolio' | 'message';
+        error: FetchState<PortfolioResponse>['error'];
+      }
+    | {
+        type: 'SUCCESS';
+        resource: 'portfolio' | 'message';
+        data: PortfolioResponse;
+        success:
+          | FetchState<PortfolioResponse>['success']
+          | FetchState<PortfolioResponse>['success'];
+        useDefaultData: boolean;
+      }
 ): UsePortfolio => {
   switch (action.type) {
     case 'LOADING':
-      return { ...state, isLoading: true, isError: false, isSuccess: false };
+      return {
+        ...state,
+        portfolio: {
+          ...state.portfolio,
+          isLoading: true,
+          isError: false,
+          isSuccess: false,
+        },
+      };
     case 'SUCCESS':
       return {
         ...state,
-        isLoading: false,
-        isSuccess: true,
-        getTemplateThemeColor: (defaultData) =>
-          getTemplateThemeColor(defaultData, action.data),
-        getSocials: (defaultData) =>
-          getSocials(defaultData, action.data.socialLinks),
-        getProfile: (defaultData) =>
-          getProfile(defaultData, action.data.profile),
-        getProducts: (defaultData) =>
-          getProducts(defaultData, action.data.products),
-        getBrands: (defaultData) => getBrands(defaultData, action.data.brands),
-        getRecommendations: (defaultData) =>
-          getRecommendations(defaultData, action.data.recommendations),
-        getCollaborations: (defaultData) =>
-          getCollaborations(defaultData, action.data.collaborations),
-        getSocialPlatforms: (defaultData) =>
-          getSocialPlatforms(defaultData, action.data.socialPlatforms),
-        getSocialAnalytics: (defaultData) =>
-          getSocialAnalytics(defaultData, action.data.socialAnalytics),
-        getTotalAudience: (defaultData) =>
-          getTotalAudience(
-            action.useDefaultData ? defaultData : action.data.socialPlatforms
-          ),
-        getLargestAudience: (defaultData) =>
-          getLargestAudience(
-            action.useDefaultData ? defaultData : action.data.socialPlatforms
-          ),
-        getBestPerformingPlatform: (defaultData) =>
-          getBestPerformingPlatform(
-            action.useDefaultData ? defaultData : action.data.socialPlatforms
-          ),
-        getLatestYoutubeVideo: (defaultData) =>
-          getLatestYoutubeVideo(
-            action.useDefaultData ? defaultData : action.data.socialPlatforms
-          ),
+        portfolio: {
+          ...state.portfolio,
+          isLoading: false,
+          isSuccess: true,
+          getTemplateThemeColor: (defaultData) =>
+            getTemplateThemeColor(defaultData, action.data),
+          getSocials: (defaultData) =>
+            getSocials(defaultData, action.data.socialLinks),
+          getProfile: (defaultData) =>
+            getProfile(defaultData, action.data.profile),
+          getProducts: (defaultData) =>
+            getProducts(defaultData, action.data.products),
+          getBrands: (defaultData) =>
+            getBrands(defaultData, action.data.brands),
+          getRecommendations: (defaultData) =>
+            getRecommendations(defaultData, action.data.recommendations),
+          getCollaborations: (defaultData) =>
+            getCollaborations(defaultData, action.data.collaborations),
+          getSocialPlatforms: (defaultData) =>
+            getSocialPlatforms(defaultData, action.data.socialPlatforms),
+          getSocialAnalytics: (defaultData) =>
+            getSocialAnalytics(defaultData, action.data.socialAnalytics),
+          getTotalAudience: (defaultData) =>
+            getTotalAudience(
+              action.useDefaultData ? defaultData : action.data.socialPlatforms
+            ),
+          getLargestAudience: (defaultData) =>
+            getLargestAudience(
+              action.useDefaultData ? defaultData : action.data.socialPlatforms
+            ),
+          getBestPerformingPlatform: (defaultData) =>
+            getBestPerformingPlatform(
+              action.useDefaultData ? defaultData : action.data.socialPlatforms
+            ),
+          getLatestYoutubeVideo: (defaultData) =>
+            getLatestYoutubeVideo(
+              action.useDefaultData ? defaultData : action.data.socialPlatforms
+            ),
+        },
       };
     case 'ERROR':
-      return { ...state, isLoading: false, isError: true, error: action.error };
+      return {
+        ...state,
+        portfolio: {
+          ...state.portfolio,
+          isLoading: false,
+          isError: true,
+          error: action.error,
+        },
+      };
     default:
       return state;
   }
@@ -85,47 +118,73 @@ const reducer = (
 const PortfolioProvider = ({
   loader,
   error,
-  useDefaultData,
-  apiUrl,
+  apiBaseUrl,
+  accessId,
+  isDraft,
   children,
 }: PortfolioProviderProps) => {
+  const useDefaultData = accessId === 'DEFAULT';
   const initialState: UsePortfolio = {
-    isLoading: !useDefaultData,
-    isError: false,
-    isSuccess: false,
-    error: undefined,
-    getTemplateThemeColor: (defaultData) => defaultData,
-    getSocials: (defaultData) => defaultData,
-    getProfile: (defaultData) => defaultData,
-    getProducts: (defaultData) => defaultData,
-    getBrands: (defaultData) => defaultData,
-    getRecommendations: (defaultData) => defaultData,
-    getCollaborations: (defaultData) => defaultData,
-    getSocialPlatforms: (defaultData) => defaultData,
-    getSocialAnalytics: (defaultData) => defaultData,
-    getTotalAudience: (defaultData) => getTotalAudience(defaultData),
-    getLargestAudience: (defaultData) => getLargestAudience(defaultData),
-    getBestPerformingPlatform: (defaultData) =>
-      getBestPerformingPlatform(defaultData),
-    getLatestYoutubeVideo: (defaultData) => getLatestYoutubeVideo(defaultData),
+    portfolio: {
+      isLoading: !useDefaultData,
+      isError: false,
+      isSuccess: false,
+      error: undefined,
+      success: undefined,
+      getTemplateThemeColor: (defaultData) => defaultData,
+      getSocials: (defaultData) => defaultData,
+      getProfile: (defaultData) => defaultData,
+      getProducts: (defaultData) => defaultData,
+      getBrands: (defaultData) => defaultData,
+      getRecommendations: (defaultData) => defaultData,
+      getCollaborations: (defaultData) => defaultData,
+      getSocialPlatforms: (defaultData) => defaultData,
+      getSocialAnalytics: (defaultData) => defaultData,
+      getTotalAudience: (defaultData) => getTotalAudience(defaultData),
+      getLargestAudience: (defaultData) => getLargestAudience(defaultData),
+      getBestPerformingPlatform: (defaultData) =>
+        getBestPerformingPlatform(defaultData),
+      getLatestYoutubeVideo: (defaultData) =>
+        getLatestYoutubeVideo(defaultData),
+    },
+    contact: {
+      sendMessage: ({ onMutate, onSuccess, onError, payload }) =>
+        sendMessage({
+          baseUrl: apiBaseUrl,
+          accessId,
+          useDefaultData,
+          onMutate,
+          onSuccess,
+          onError,
+          payload,
+        }),
+    },
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const getPortfolioDetails = async () => {
-      dispatch({ type: 'LOADING' });
+      dispatch({ type: 'LOADING', resource: 'portfolio' });
 
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(
+          `${apiBaseUrl}/portfolios/${accessId}?isAnon=true&draft=${isDraft}`
+        );
 
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
 
-        const { data } = await response.json();
-        dispatch({ type: 'SUCCESS', data, useDefaultData });
+        const result = await response.json();
+        dispatch({
+          type: 'SUCCESS',
+          resource: 'portfolio',
+          data: result.data,
+          success: result,
+          useDefaultData,
+        });
       } catch (error: any) {
-        dispatch({ type: 'ERROR', error });
+        dispatch({ type: 'ERROR', resource: 'portfolio', error });
       }
     };
 
@@ -134,11 +193,11 @@ const PortfolioProvider = ({
     }
   }, [useDefaultData]);
 
-  if (state.isLoading || state.isError) {
-    return state.isLoading && loader ? (
+  if (state.portfolio.isLoading || state.portfolio.isError) {
+    return state.portfolio.isLoading && loader ? (
       loader()
-    ) : state.isError && error ? (
-      error(state.error)
+    ) : state.portfolio.isError && error ? (
+      error(state.portfolio.error)
     ) : (
       <main
         className='dark:text-white text-[#010101]'
@@ -151,7 +210,7 @@ const PortfolioProvider = ({
           flexDirection: 'column',
         }}
       >
-        {state.isLoading ? (
+        {state.portfolio.isLoading ? (
           <p style={{ fontSize: 18 }}>Loading...</p>
         ) : (
           <>
@@ -159,7 +218,7 @@ const PortfolioProvider = ({
               Ooops an error occured!!!
             </h1>
             <p style={{ paddingTop: '8px', fontSize: 14 }}>
-              {state.error?.message}
+              {state.portfolio.error?.message}
             </p>
           </>
         )}

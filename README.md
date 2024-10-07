@@ -113,7 +113,6 @@ const userProfile: PortfolioProfile = {
 
 #### `Types`
 
-- PortfolioProvider
 - SupportedPlatforms
 - SupportedSocialLinks
 - Portfolio
@@ -130,7 +129,11 @@ const userProfile: PortfolioProfile = {
 - ErrorProps
 - SuccessProps
 - FetchState
+- Maybe
+- SendMessagePayload
+- SendMessageProps
 - UsePortfolio
+- PortfolioProviderProps
 
 #### `usePortfolio`
 
@@ -138,21 +141,28 @@ This hook returns portfolio-related data and actions:
 
 ##### Returned Values:
 
-- `isError`: Indicates if there was an error fetching the data.
-- `isSuccess`: Indicates if the query was successful.
-- `error`: Contains error details if an error occurs during data fetching.
-- `getTemplateThemeColor(defaultData)`: Returns the template's theme color, or the defaultData if unavailable.
-- `getProfile(defaultData)`: Returns the portfolio profile, or defaultData if unavailable.
-- `getSocialPlatforms(defaultData)`: Returns social platforms linked to the portfolio, or defaultData if unavailable.
-- `getProducts(defaultData)`: Returns portfolio products, or defaultData if unavailable.
-- `getBrands(defaultData)`: Returns the brands associated with the portfolio, or defaultData if unavailable.
-- `getRecommendations(defaultData)`: Returns portfolio recommendations, or defaultData if unavailable.
-- `getCollaborations(defaultData)`: Returns collaborations related to the portfolio, or defaultData if unavailable.
-- `getSocialAnalytics(defaultData)`: Returns social analytics data, or defaultData if unavailable.
-- `getTotalAudience(defaultData)`: Returns the total audience count across all platforms.
-- `getLargestAudience(defaultData)`: Returns the platform with the largest audience, or null if unavailable.
-- `getBestPerformingPlatform(defaultData)`: Returns the best-performing social platform, or null if unavailable.
-- `getLatestYoutubeVideo(defaultData)`: Returns the most recent YouTube video, or null if unavailable.
+- `**portfolio**`: The portfolio object returns the following:
+  - `isError`: Indicates if there was an error fetching the data.
+  - `isSuccess`: Indicates if the query was successful.
+  - `error`: Contains error details if an error occurs during data fetching.
+  - `getTemplateThemeColor(defaultData)`: Returns the template's theme color, or the defaultData if unavailable.
+  - `getProfile(defaultData)`: Returns the portfolio profile, or defaultData if unavailable.
+  - `getSocialPlatforms(defaultData)`: Returns social platforms linked to the portfolio, or defaultData if unavailable.
+  - `getProducts(defaultData)`: Returns portfolio products, or defaultData if unavailable.
+  - `getBrands(defaultData)`: Returns the brands associated with the portfolio, or defaultData if unavailable.
+  - `getRecommendations(defaultData)`: Returns portfolio recommendations, or defaultData if unavailable.
+  - `getCollaborations(defaultData)`: Returns collaborations related to the portfolio, or defaultData if unavailable.
+  - `getSocialAnalytics(defaultData)`: Returns social analytics data, or defaultData if unavailable.
+  - `getTotalAudience(defaultData)`: Returns the total audience count across all platforms.
+  - `getLargestAudience(defaultData)`: Returns the platform with the largest audience, or null if unavailable.
+  - `getBestPerformingPlatform(defaultData)`: Returns the best-performing social platform, or null if unavailable.
+  - `getLatestYoutubeVideo(defaultData)`: Returns the most recent YouTube video, or null if unavailable.
+- `**contact**`: The contact object returns the following:
+  - `sendMessage({onMutate, onSuccess, onError, payload})`: Sends a message to the portfolio owner.
+    - `onMutate`: A callback function to be executed before sending the message.
+    - `onSuccess`: A callback function to be executed after sending the message successfully.
+    - `onError`: A callback function to be executed if there's an error sending the message.
+    - `payload`: The message payload.
 
 #### `PortfolioProvider`
 
@@ -162,6 +172,9 @@ The `PortfolioProvider` component fetches portfolio data and provides it to chil
 
 `loader`: Optional. A custom loader component to display while data is being fetched.
 `error`: Optional. A custom error component to display if fetching data fails.
+`apiBaseUrl`: Required. The backend api url.
+`accessId`: Required. The portfolio access id.
+`isDraft`: Required. whether you would like to fetch draft changes or not.
 
 Example:
 
@@ -177,8 +190,9 @@ function renderError() {
 <PortfolioProvider
   loader={renderLoader}
   error={renderError}
-  useDefaultData={useDefaultData}
-  apiUr='apiUrl'
+  apiBaseUrl='apiBaseUrl'
+  accessId='accessId'
+  isDraft={false}
 >
   <YourComponent />
 </PortfolioProvider>;
