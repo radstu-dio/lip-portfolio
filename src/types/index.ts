@@ -222,7 +222,7 @@ export interface SendMessagePayload {
   websiteUrl: string;
   company?: Maybe<string | undefined>;
   subject: string;
-  type: 'media-kit-request' | 'message';
+  type: string;
   message: string;
 }
 
