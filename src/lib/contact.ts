@@ -51,5 +51,5 @@ export async function hasAccessToMediaKit(
   );
 
   const { data } = await response.json();
-  return data?.access === 'granted' && data?.accessCode === code;
+  return data?.access === 'approved' && data?.accessCode === code;
 }
