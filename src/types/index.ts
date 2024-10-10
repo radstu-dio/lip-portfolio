@@ -216,11 +216,14 @@ export type Maybe<T> = T | null | undefined;
 export interface SendMessagePayload {
   firstName: string;
   lastName: string;
-  email: string;
+  receiverName: string;
+  senderEmail: string;
+  receiverEmail: string;
+  websiteUrl: string;
   company?: Maybe<string | undefined>;
   subject: string;
+  type: 'media-kit-request' | 'message';
   message: string;
-  type: string;
 }
 
 export interface MutateState {
