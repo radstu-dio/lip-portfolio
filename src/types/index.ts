@@ -221,8 +221,9 @@ export interface SendMessagePayload {
   receiverEmail: string;
   websiteUrl: string;
   company?: Maybe<string | undefined>;
+  role?: Maybe<string | undefined>;
+  requestType: string;
   subject: string;
-  type: string;
   message: string;
 }
 
