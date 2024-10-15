@@ -170,16 +170,7 @@ const PortfolioProvider = ({
 
       try {
         const response = await fetch(
-          `${apiBaseUrl}/portfolios/${accessId}?isAnon=true&draft=${isDraft}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Page-Title': window.document.title,
-              'X-Screen-Width': window.screen.width.toString(),
-              'X-Screen-Height': window.screen.height.toString(),
-            },
-          }
+          `${apiBaseUrl}/portfolios/${accessId}?isAnon=true&draft=${isDraft}`
         );
 
         if (!response.ok) {
