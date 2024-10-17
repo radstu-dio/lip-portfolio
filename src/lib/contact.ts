@@ -17,8 +17,12 @@ export async function sendMessage({
       const url = `${baseUrl}/portfolios/${accessId}/contacts?isAnon=true`;
       const response = await fetch(url, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          'X-Page-Title': window.document.title,
+          'X-Screen-Width': window.screen.width.toString(),
+          'X-Screen-Height': window.screen.height.toString(),
         },
         body: JSON.stringify(payload),
       });
@@ -47,7 +51,16 @@ export async function hasAccessToMediaKit(
   code: string
 ): Promise<boolean> {
   const response = await fetch(
-    `${baseUrl}/portfolios/${accessId}/contacts/${code}?isAnon=true`
+    `${baseUrl}/portfolios/${accessId}/contacts/${code}?isAnon=true`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'X-Page-Title': window.document.title,
+        'X-Screen-Width': window.screen.width.toString(),
+        'X-Screen-Height': window.screen.height.toString(),
+      },
+    }
   );
 
   const { data } = await response.json();
