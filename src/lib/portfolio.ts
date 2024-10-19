@@ -64,11 +64,14 @@ const getSocials = (
           ? {
               ...link,
               ...link.draft,
-              icon: socialIcons[link.name],
+              icon: socialIcons[link.draft.name],
             }
-          : { ...link, icon: socialIcons[link.name] }; // Use draft if available
+          : {
+              ...link,
+              icon: socialIcons[link.name],
+            };
 
-        if (!validLink.draft && !validLink.name) {
+        if (validLink.draft) {
           delete (validLink as { draft?: any }).draft; // Remove draft property
         }
         if (validLink && !acc.some((l) => l.name === validLink.name)) {
@@ -89,9 +92,9 @@ const getProducts = (
               ...product,
               ...product.draft,
             }
-          : product; // Use draft if available
+          : product;
 
-        if (!validProduct.draft && !validProduct.name) {
+        if (validProduct.draft) {
           delete (validProduct as { draft?: any }).draft; // Remove draft property
         }
         if (validProduct && !acc.some((l) => l.name === validProduct.name)) {
@@ -112,9 +115,9 @@ const getBrands = (
               ...brand,
               ...brand.draft,
             }
-          : brand; // Use draft if available
+          : brand;
 
-        if (!validBrand.draft && !validBrand.companyName) {
+        if (validBrand.draft) {
           delete (validBrand as { draft?: any }).draft; // Remove draft property
         }
         if (
@@ -138,9 +141,9 @@ const getRecommendations = (
               ...recommendation,
               ...recommendation.draft,
             }
-          : recommendation; // Use draft if available
+          : recommendation;
 
-        if (!validRecommendation.draft && !validRecommendation.name) {
+        if (validRecommendation.draft) {
           delete (validRecommendation as { draft?: any }).draft; // Remove draft property
         }
         if (
@@ -164,9 +167,9 @@ const getCollaborations = (
               ...collaboration,
               ...collaboration.draft,
             }
-          : collaboration; // Use draft if available
+          : collaboration;
 
-        if (!validCollaboration.draft && !validCollaboration.url) {
+        if (validCollaboration.draft) {
           delete (validCollaboration as { draft?: any }).draft; // Remove draft property
         }
         if (
@@ -206,9 +209,9 @@ const getSocialPlatforms = (
                   metric.name as PortfolioSocialPlatform['metrics'][number]['name']
                 ],
               })),
-            }; // Use draft if available
+            };
 
-        if (!validSocialPlatform.draft && !validSocialPlatform.name) {
+        if (validSocialPlatform.draft) {
           delete (validSocialPlatform as { draft?: any }).draft; // Remove draft property
         }
         if (
