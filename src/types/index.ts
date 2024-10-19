@@ -65,6 +65,7 @@ export interface PortfolioSocialLink {
   icon?: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioNotification {
@@ -75,6 +76,7 @@ export interface PortfolioNotification {
   draft: PortfolioNotification | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioRecommendation {
@@ -87,6 +89,7 @@ export interface PortfolioRecommendation {
   draft: PortfolioRecommendation | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioProduct {
@@ -98,6 +101,7 @@ export interface PortfolioProduct {
   draft: PortfolioProduct | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioCollaboration {
@@ -110,6 +114,7 @@ export interface PortfolioCollaboration {
   draft: PortfolioCollaboration | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioBrand {
@@ -120,6 +125,7 @@ export interface PortfolioBrand {
   draft: PortfolioBrand | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioSocialPlatform {
@@ -177,6 +183,7 @@ export interface PortfolioSocialPlatform {
   draft: PortfolioSocialPlatform | null;
   createdAt: string;
   updatedAt: string;
+  status: 'active' | 'inactive';
 }
 
 export interface PortfolioResponse extends Portfolio {
