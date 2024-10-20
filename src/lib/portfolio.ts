@@ -15,7 +15,7 @@ const getTemplateThemeColor = (
   defaultData: Portfolio['templateThemeColor'],
   data: Portfolio
 ): Portfolio['templateThemeColor'] =>
-  data
+  data.draft?.templateThemeColor || data.templateThemeColor
     ? data.draft?.templateThemeColor ?? data.templateThemeColor
     : defaultData;
 
