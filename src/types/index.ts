@@ -24,7 +24,6 @@ export interface Portfolio {
   templateVersionId: string;
   templateThemeColor: string;
   slug: string;
-  featureAccess: 'basic' | 'intermediate' | 'advanced';
   draft: Portfolio | null;
   status: string;
   createdAt: string;
@@ -40,6 +39,7 @@ export interface PortfolioProfile {
   coverImageUrl: string | null;
   contactEmail: string | null;
   draft: PortfolioProfile | null;
+  featureAccess: 'basic' | 'intermediate' | 'advanced';
   createdAt: string;
   updatedAt: string;
 }
