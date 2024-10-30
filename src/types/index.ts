@@ -24,7 +24,7 @@ export interface Portfolio {
   templateVersionId: string;
   templateThemeColor: string;
   slug: string;
-  deploymentProjectId: string;
+  featureAccess: 'basic' | 'intermediate' | 'advanced';
   draft: Portfolio | null;
   status: string;
   createdAt: string;
