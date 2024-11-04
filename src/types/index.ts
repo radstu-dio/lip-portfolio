@@ -269,12 +269,16 @@ export type UsePortfolio = {
       defaultData: PortfolioSocialAnalytics
     ) => PortfolioSocialAnalytics;
     getTotalAudience: (defaultData: PortfolioSocialPlatform[]) => number;
-    getLargestAudience: (
-      defaultData: PortfolioSocialPlatform[]
-    ) => PortfolioSocialPlatform | null;
-    getBestPerformingPlatform: (
-      defaultData: PortfolioSocialPlatform[]
-    ) => PortfolioSocialPlatform | null;
+    getLargestAudience: (defaultData: PortfolioSocialPlatform[]) =>
+      | (PortfolioSocialPlatform & {
+          icon?: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+        })
+      | null;
+    getBestPerformingPlatform: (defaultData: PortfolioSocialPlatform[]) =>
+      | (PortfolioSocialPlatform & {
+          icon?: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+        })
+      | null;
     getLatestYoutubeVideo: (
       defaultData: PortfolioSocialPlatform[]
     ) => PortfolioSocialPlatform['media'][number] | null;

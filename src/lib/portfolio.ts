@@ -234,9 +234,11 @@ const getSocialPlatforms = (
     }, []);
 };
 
-function getBestPerformingPlatform(
-  data: PortfolioSocialPlatform[]
-): PortfolioSocialPlatform | null {
+function getBestPerformingPlatform(data: PortfolioSocialPlatform[]):
+  | (PortfolioSocialPlatform & {
+      icon?: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+    })
+  | null {
   if (!data.length) return null;
 
   return data.reduce((bestPlatform, currentPlatform) => {
@@ -264,9 +266,11 @@ function getBestPerformingPlatform(
   });
 }
 
-function getLargestAudience(
-  data: PortfolioSocialPlatform[]
-): PortfolioSocialPlatform | null {
+function getLargestAudience(data: PortfolioSocialPlatform[]):
+  | (PortfolioSocialPlatform & {
+      icon?: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+    })
+  | null {
   if (!data.length) return null;
 
   return data.reduce((largestPlatform, currentPlatform) => {
@@ -275,11 +279,13 @@ function getLargestAudience(
       : currentPlatform;
 
     const currentFollowers =
-      platformToEvaluate.metrics.find((metric) => metric.name === 'Followers')
-        ?.value || 0;
+      platformToEvaluate.metrics.find(
+        (metric) => metric.name === 'Followers' || metric.name === 'Subscribers'
+      )?.value || 0;
     const largestFollowers =
-      largestPlatform.metrics.find((metric) => metric.name === 'Followers')
-        ?.value || 0;
+      largestPlatform.metrics.find(
+        (metric) => metric.name === 'Followers' || metric.name === 'Subscribers'
+      )?.value || 0;
 
     const largestAudience =
       currentFollowers > largestFollowers
